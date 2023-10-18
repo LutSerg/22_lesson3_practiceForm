@@ -3,6 +3,7 @@ package asteroster.test;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.Condition.text;
@@ -12,17 +13,23 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class WebFormTest {
 
-    @Test
-    void demoqaWebTest() {
+    @BeforeAll
+    public static void setUp() {
         Configuration.pageLoadStrategy = "eager";
         Configuration.baseUrl = "https://demoqa.com";
         Configuration.browserSize = "1920x1080";
+        Configuration.holdBrowserOpen = false;
+
+    }
+    @Test
+    void demoqaWebTest() {
+
 
         open("/automation-practice-form");
         $("#firstName").setValue("Johny");
         $("#lastName").setValue("Mnemonic");
         $("#userEmail").setValue("johnmnc@test.com");
-        $("[for='gender-radio-3']").click();
+        $("#genterWrapper").$(byText("Other")).click();
         $("#userNumber").setValue("8572918374");
         $("#dateOfBirthInput").click();
         $(".react-datepicker__month-select").click();
@@ -40,25 +47,25 @@ public class WebFormTest {
         $("#submit").click();
         $(".modal-dialog").should(Condition.appear);
         $(".modal-content").shouldHave(Condition.text("Thanks for submitting the form"));
-        $(".table-responsive").$(byText("Johny Mnemonic")).parent()
-                .shouldHave(text("Student Name"));
-        $(".table-responsive").$(byText("johnmnc@test.com")).parent()
-                .shouldHave(text("Student Email"));
-        $(".table-responsive").$(byText("Other")).parent()
-                .shouldHave(text("Gender"));
-        $(".table-responsive").$(byText("8572918374")).parent()
-                .shouldHave(text("Mobile"));
-        $(".table-responsive").$(byText("28 June,1988")).parent()
-                .shouldHave(text("Date of Birth"));
-        $(".table-responsive").$(byText("Biology")).parent()
-                .shouldHave(text("Subjects"));
-        $(".table-responsive").$(byText("Sports")).parent()
-                .shouldHave(text("Hobbies"));
-        $(".table-responsive").$(byText("Rattus.jpg")).parent()
-                .shouldHave(text("Picture"));
-        $(".table-responsive").$(byText("some address")).parent()
-                .shouldHave(text("Address"));
-        $(".table-responsive").$(byText("Haryana Panipat")).parent()
-                .shouldHave(text("State and City"));
+        $(".table-responsive").$(byText("Student Name")).parent()
+                .shouldHave(text("Johny Mnemonic"));
+        $(".table-responsive").$(byText("Student Email")).parent()
+                .shouldHave(text("johnmnc@test.com"));
+        $(".table-responsive").$(byText("Gender")).parent()
+                .shouldHave(text("Other"));
+        $(".table-responsive").$(byText("Mobile")).parent()
+                .shouldHave(text("8572918374"));
+        $(".table-responsive").$(byText("Date of Birth")).parent()
+                .shouldHave(text("28 June,1988"));
+        $(".table-responsive").$(byText("Subjects")).parent()
+                .shouldHave(text("Biology"));
+        $(".table-responsive").$(byText("Hobbies")).parent()
+                .shouldHave(text("Sports"));
+        $(".table-responsive").$(byText("Picture")).parent()
+                .shouldHave(text("Rattus.jpg"));
+        $(".table-responsive").$(byText("Address")).parent()
+                .shouldHave(text("some address"));
+        $(".table-responsive").$(byText("State and City")).parent()
+                .shouldHave(text("Haryana Panipat"));
         }
 }
